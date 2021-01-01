@@ -102,7 +102,7 @@ class _ResturantListState extends State<ResturantList> {
                 }
               }),
               SizedBox(
-                height: 16,
+                height: 70,
               )
             ],
           ),

@@ -11,7 +11,7 @@ class Wrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     prevPageEvent = GoToSplashLoadingPage();
-    context.read<PageBloc>().add(prevPageEvent);
+    context.bloc<PageBloc>().add(prevPageEvent);
 
     return BlocBuilder<PageBloc, PageState>(
       builder: (_, pageState) => (pageState is OnSplashLoadingPage)
