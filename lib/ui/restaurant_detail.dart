@@ -15,6 +15,7 @@ class DetailRestaurantPage extends StatefulWidget {
 }
 
 class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
+  bool fav = false;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -104,9 +105,22 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                                             style: font1.copyWith(fontSize: 24),
                                           ),
                                         ),
-                                        Icon(
-                                          Icons.favorite_outline,
-                                          color: Colors.amber,
+                                        GestureDetector(
+                                          onTap: () {
+                                            setState(() {
+                                              if (fav == false) {
+                                                fav = true;
+                                              } else if (fav == true) {
+                                                fav = false;
+                                              }
+                                            });
+                                          },
+                                          child: Icon(
+                                            (fav == false)
+                                                ? Icons.favorite_outline
+                                                : Icons.favorite,
+                                            color: Colors.amber,
+                                          ),
                                         )
                                       ],
                                     ),

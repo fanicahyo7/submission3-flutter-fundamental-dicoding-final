@@ -29,6 +29,7 @@ dependencies:
   google_fonts: ^1.1.1
   material_design_icons_flutter: ^4.0.5755
   provider: ^4.3.1
+  shared_preferences: ^0.5.12+4
 
 dev_dependencies:
   flutter_test:
