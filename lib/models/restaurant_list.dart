@@ -21,8 +21,7 @@ class RestaurantList extends Equatable {
             json["restaurants"].map((x) => Restaurants.fromJson(x))),
       );
 
-  factory RestaurantList.fromJsonNo() =>
-      RestaurantList(
+  factory RestaurantList.fromJsonNo() => RestaurantList(
         error: true,
         message: "Tidak Ada Internet\nPeriksalah Koneksi Anda!",
         count: 0,
@@ -31,6 +30,16 @@ class RestaurantList extends Equatable {
 
   @override
   List<Object> get props => [restaurants, message, error];
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['error'] = this.error;
+    data['message'] = this.message;
+    if (this.restaurants != null) {
+      data['restaurants'] = this.restaurants.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class Restaurants extends Equatable {
@@ -58,6 +67,17 @@ class Restaurants extends Equatable {
         city: json["city"],
         rating: json["rating"].toDouble(),
       );
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['name'] = this.name;
+    data['description'] = this.description;
+    data['pictureId'] = this.pictureId;
+    data['city'] = this.city;
+    data['rating'] = this.rating;
+    return data;
+  }
 
   @override
   List<Object> get props => [

@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:submission2_flutter_fundamental_dicoding_bloc/bloc/setting_reminder_bloc.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/common/style.dart';
+import 'package:submission2_flutter_fundamental_dicoding_bloc/services/setting_preferences.dart';
 
 class SettingPage extends StatefulWidget {
   @override
@@ -9,7 +12,11 @@ class SettingPage extends StatefulWidget {
 class _SettingPageState extends State<SettingPage> {
   @override
   Widget build(BuildContext context) {
-    return  SafeArea(
+    return BlocProvider(
+      create: (context) => SettingReminderBloc(
+          restaurantSettingPreferences: RestaurantSettingPreferencesac())
+        ..add(CheckReminder()),
+      child: SafeArea(
         child: ListView(
           padding: EdgeInsets.only(top: 16),
           children: [
@@ -38,40 +45,33 @@ class _SettingPageState extends State<SettingPage> {
                   ),
                   child: ListTile(
                     title: Text("Pasang Notifikasi"),
-                    trailing: Switch.adaptive(value: true, onChanged: null),
-                    // trailing: BlocBuilder<SchedulingBloc, SchedulingState>(
-                    //   builder: (context, state) {
-                    //     if (state is SchedulingSetAlarmState) {
-                    //       return Switch.adaptive(
-                    //           value: true,
-                    //           onChanged: (_) {
-                    //             if (Platform.isIOS) {
-                    //               alertDialog(context);
-                    //             } else {
-                    //               BlocProvider.of<SchedulingBloc>(context)
-                    //                   .add(CancelScheduling());
-                    //             }
-                    //           });
-                    //     } else {
-                    //       return Switch.adaptive(
-                    //           value: false,
-                    //           onChanged: (_) {
-                    //             if (Platform.isIOS) {
-                    //               alertDialog(context);
-                    //             } else {
-                    //               BlocProvider.of<SchedulingBloc>(context)
-                    //                   .add(SetScheduling());
-                    //             }
-                    //           });
-                    //     }
-                    //   },
-                    // ),
+                    trailing:
+                        BlocBuilder<SettingReminderBloc, SettingReminderState>(
+                      builder: (context, state) {
+                        if (state is SettingReminderOnState) {
+                          return Switch.adaptive(
+                              value: true,
+                              onChanged: (_) {
+                                BlocProvider.of<SettingReminderBloc>(context)
+                                    .add(OffReminder());
+                              });
+                        } else {
+                          return Switch.adaptive(
+                              value: false,
+                              onChanged: (_) {
+                                BlocProvider.of<SettingReminderBloc>(context)
+                                    .add(OnReminder());
+                              });
+                        }
+                      },
+                    ),
                   ),
                 )
               ],
             ),
           ],
         ),
-      );
+      ),
+    );
   }
 }

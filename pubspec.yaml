@@ -23,12 +23,16 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  android_alarm_manager: ^0.4.5+17
   cupertino_icons: ^1.0.0
   equatable: ^1.2.5
   flutter_bloc: ^6.1.1
+  flutter_local_notifications: ^3.0.2
   google_fonts: ^1.1.1
+  intl: ^0.16.1
   material_design_icons_flutter: ^4.0.5755
   provider: ^4.3.1
+  rxdart: ^0.25.0
   shared_preferences: ^0.5.12+4
 
 dev_dependencies:

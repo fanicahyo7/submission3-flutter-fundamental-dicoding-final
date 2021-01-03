@@ -9,22 +9,22 @@ class SettingReminderInitial extends SettingReminderState {
   List<Object> get props => [];
 }
 
-class SettingeminderLoadingState extends SettingReminderState{
+class SettingReminderLoadingState extends SettingReminderState{
   @override
   List<Object> get props => [];
 }
 
-class SettingeminderLoadedState extends SettingReminderState{
+class SettingReminderLoadedState extends SettingReminderState{
   @override
   List<Object> get props => [];
 }
 
-class SettingeminderOnState extends SettingReminderState{
+class SettingReminderOnState extends SettingReminderState{
   @override
   List<Object> get props => [];
 }
 
-class SettingeminderOffState extends SettingReminderState{
+class SettingReminderOffState extends SettingReminderState{
   @override
   List<Object> get props => [];
 }
