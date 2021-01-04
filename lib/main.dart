@@ -12,7 +12,6 @@ import 'package:submission2_flutter_fundamental_dicoding_bloc/common/navigation.
 import 'package:submission2_flutter_fundamental_dicoding_bloc/ui/wrapper.dart';
 
 import 'bloc/page_bloc.dart';
-// import 'bloc/setting_reminder_bloc.dart';
 import 'common/background_service.dart';
 import 'common/notification_helper.dart';
 
@@ -43,7 +42,6 @@ class MyApp extends StatelessWidget {
         ),
         BlocProvider(create: (_) => RestaurantDetailBloc()),
         BlocProvider(create: (_) => RestaurantSearchBloc()),
-        // BlocProvider(create: (_) => SettingReminderBloc()),
       ],
       child: MaterialApp(
         navigatorKey: navigationKey,
