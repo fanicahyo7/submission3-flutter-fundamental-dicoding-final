@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/bloc/page_bloc.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/bloc/restaurant_detail_bloc.dart';
+import 'package:submission2_flutter_fundamental_dicoding_bloc/bloc/restaurant_favorite_bloc.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/common/shared_value.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/common/style.dart';
+import 'package:submission2_flutter_fundamental_dicoding_bloc/models/resto_db.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/widgets/no_internet.dart';
 
 class DetailRestaurantPage extends StatefulWidget {
@@ -16,6 +18,7 @@ class DetailRestaurantPage extends StatefulWidget {
 
 class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
   bool fav = false;
+  Resto _restaurantTableData;
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
@@ -35,9 +38,17 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
             )),
             SafeArea(
               child: SingleChildScrollView(
-                child: BlocProvider(
-                  create: (_) => RestaurantDetailBloc()
-                    ..add(FetchDetailRestaurant(widget.idrestaurant)),
+                child: MultiBlocProvider(
+                  providers: [
+                    BlocProvider(
+                        create: (_) => RestaurantDetailBloc()
+                          ..add(FetchDetailRestaurant(widget.idrestaurant))),
+                    BlocProvider(
+                      create: (_) => RestaurantFavoriteBloc()
+                        ..add(GetListFavoriteRestaurantById(
+                            id: widget.idrestaurant)),
+                    )
+                  ],
                   child:
                       BlocBuilder<RestaurantDetailBloc, RestaurantDetailState>(
                           builder: (_, detailList) {
@@ -105,23 +116,51 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                                             style: font1.copyWith(fontSize: 24),
                                           ),
                                         ),
-                                        GestureDetector(
-                                          onTap: () {
-                                            setState(() {
-                                              if (fav == false) {
-                                                fav = true;
-                                              } else if (fav == true) {
-                                                fav = false;
-                                              }
-                                            });
+                                        BlocBuilder<RestaurantFavoriteBloc,
+                                            RestaurantFavoriteState>(
+                                          builder: (context, state) {
+                                            if (state
+                                                is FavoriteRestaurantSuccessGetListByIdState) {
+                                              return IconButton(
+                                                icon: Icon(Icons.bookmark),
+                                                onPressed: () => BlocProvider
+                                                        .of<RestaurantFavoriteBloc>(
+                                                            context)
+                                                    .add(
+                                                  DeleteFavoriteRestaurant(
+                                                      restaurantTableData:
+                                                          _restaurantTableData),
+                                                ),
+                                              );
+                                            } else if (state
+                                                is FavoriteRestaurantSuccessInsertState) {
+                                              return IconButton(
+                                                icon: Icon(Icons.bookmark),
+                                                onPressed: () => BlocProvider
+                                                        .of<RestaurantFavoriteBloc>(
+                                                            context)
+                                                    .add(
+                                                  DeleteFavoriteRestaurant(
+                                                      restaurantTableData:
+                                                          _restaurantTableData),
+                                                ),
+                                              );
+                                            } else {
+                                              return IconButton(
+                                                icon:
+                                                    Icon(Icons.bookmark_border),
+                                                onPressed: () => BlocProvider
+                                                        .of<RestaurantFavoriteBloc>(
+                                                            context)
+                                                    .add(
+                                                  InsertFavoriteRestaurant(
+                                                      restaurantTableData:
+                                                          _restaurantTableData),
+                                                ),
+                                              );
+                                            }
                                           },
-                                          child: Icon(
-                                            (fav == false)
-                                                ? Icons.favorite_outline
-                                                : Icons.favorite,
-                                            color: Colors.amber,
-                                          ),
-                                        )
+                                        ),
                                       ],
                                     ),
                                     Row(

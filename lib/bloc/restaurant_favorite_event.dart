@@ -9,6 +9,14 @@ class GetListFavoriteRestaurant extends RestaurantFavoriteEvent {
   List<Object> get props => [];
 }
 
+class GetListFavoriteRestaurantById extends RestaurantFavoriteEvent {
+  final String id;
+
+  GetListFavoriteRestaurantById({@required this.id});
+
+  @override
+  List<Object> get props => [id];
+}
 
 class InsertFavoriteRestaurant extends RestaurantFavoriteEvent {
   final Resto restaurantTableData;

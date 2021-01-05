@@ -9,8 +9,7 @@
     <uses-permission android:name="android.permission.WAKE_LOCK"/>
     
     <application
-        android:name=".MainActivity"
-        <!-- android:name="io.flutter.app.FlutterApplication" -->
+        android:name="io.flutter.app.FlutterApplication"
         android:label="submission2_flutter_fundamental_dicoding_bloc"
         android:icon="@mipmap/ic_launcher">
         <activity

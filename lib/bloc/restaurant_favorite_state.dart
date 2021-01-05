@@ -20,13 +20,24 @@ class FavoriteRestaurantFailedState extends RestaurantFavoriteState {
 }
 
 class FavoriteRestaurantSuccessGetListState extends RestaurantFavoriteState {
-  final List<Resto> listRestaurantTableData;
+  final List<Restaurants> listRestaurantTableData;
 
   FavoriteRestaurantSuccessGetListState(
       {@required this.listRestaurantTableData});
 
   @override
   List<Object> get props => [listRestaurantTableData];
+}
+
+class FavoriteRestaurantSuccessGetListByIdState
+    extends RestaurantFavoriteState {
+  final bool restaurantTableData;
+
+  FavoriteRestaurantSuccessGetListByIdState(
+      {@required this.restaurantTableData});
+
+  @override
+  List<Object> get props => [restaurantTableData];
 }
 
 class FavoriteRestaurantSuccessInsertState extends RestaurantFavoriteState {
