@@ -1,5 +1,5 @@
 import 'package:sqflite/sqflite.dart';
-import 'package:submission2_flutter_fundamental_dicoding_bloc/models/restaurant_list.dart';
+import 'package:submission2_flutter_fundamental_dicoding_bloc/models/resto_db.dart';
 
 class DatabaseHelper {
   static DatabaseHelper _databaseHelper;
@@ -15,6 +15,14 @@ class DatabaseHelper {
     return _databaseHelper;
   }
 
+  Future<Database> get database async {
+    if (_database == null) {
+      _database = await _initializeDb();
+    }
+
+    return _database;
+  }
+
   static const String _tblBookmark = 'bookmarks';
 
   Future<Database> _initializeDb() async {
@@ -23,13 +31,8 @@ class DatabaseHelper {
       '$path/favoriteResto.db',
       onCreate: (db, version) async {
         await db.execute('''CREATE TABLE $_tblBookmark (
-             url TEXT PRIMARY KEY,
-             author TEXT,
-             title TEXT,
-             description TEXT,
-             urlToImage TEXT,
-             publishedAt TEXT,
-             content TEXT
+             id TEXT PRIMARY KEY,
+             judul TEXT
            )     
         ''');
       },
@@ -39,49 +42,37 @@ class DatabaseHelper {
     return db;
   }
 
-  Future<Database> get database async {
-    if (_database == null) {
-      _database = await _initializeDb();
-    }
-
-    return _database;
-  }
-
-  Future<void> insertBookmark(Restaurants article) async {
+  Future<void> insertBookmark(Resto article) async {
     final db = await database;
-    await db.insert(_tblBookmark, article.toJson());
+    await db.insert(_tblBookmark, article.toMap());
   }
 
-  Future<List<Restaurants>> getBookmarks() async {
+  Future<List<Resto>> getBookmarks() async {
     final db = await database;
     List<Map<String, dynamic>> results = await db.query(_tblBookmark);
 
-    return results.map((res) => Restaurants.fromJson(res)).toList();
+    return results.map((res) => Resto.fromMap(res)).toList();
   }
 
-  Future<Map> getBookmarkByUrl(String url) async {
+  Future<Resto> getBookmarkById(String id) async {
     final db = await database;
 
     List<Map<String, dynamic>> results = await db.query(
       _tblBookmark,
       where: 'id = ?',
-      whereArgs: [url],
+      whereArgs: [id],
     );
 
-    if (results.isNotEmpty) {
-      return results.first;
-    } else {
-      return {};
-    }
+     return results.map((res) => Resto.fromMap(res)).first;
   }
 
-  Future<void> removeBookmark(String url) async {
+  Future<void> removeBookmark(String id) async {
     final db = await database;
 
     await db.delete(
       _tblBookmark,
       where: 'id = ?',
-      whereArgs: [url],
+      whereArgs: [id],
     );
   }
 }

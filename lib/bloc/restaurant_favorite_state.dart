@@ -20,7 +20,7 @@ class FavoriteRestaurantFailedState extends RestaurantFavoriteState {
 }
 
 class FavoriteRestaurantSuccessGetListState extends RestaurantFavoriteState {
-  final List<Restaurants> listRestaurantTableData;
+  final List<Resto> listRestaurantTableData;
 
   FavoriteRestaurantSuccessGetListState(
       {@required this.listRestaurantTableData});
@@ -31,7 +31,7 @@ class FavoriteRestaurantSuccessGetListState extends RestaurantFavoriteState {
 
 class FavoriteRestaurantSuccessGetListByIdState
     extends RestaurantFavoriteState {
-  final bool restaurantTableData;
+  final Resto restaurantTableData;
 
   FavoriteRestaurantSuccessGetListByIdState(
       {@required this.restaurantTableData});

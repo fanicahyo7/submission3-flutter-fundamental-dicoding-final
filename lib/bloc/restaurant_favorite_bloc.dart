@@ -4,7 +4,6 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/common/database_helper.dart';
-import 'package:submission2_flutter_fundamental_dicoding_bloc/models/restaurant_list.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/models/resto_db.dart';
 
 part 'restaurant_favorite_event.dart';
@@ -22,7 +21,7 @@ class RestaurantFavoriteBloc
 
     if (event is GetListFavoriteRestaurant) {
       yield FavoriteRestaurantLoadingState();
-      List<Restaurants> listFavoriteRestaurant = [];
+      List<Resto> listFavoriteRestaurant = [];
       DatabaseHelper _dbHelper;
 
       listFavoriteRestaurant = await _dbHelper.getBookmarks();
@@ -34,35 +33,36 @@ class RestaurantFavoriteBloc
       }
     } else if (event is GetListFavoriteRestaurantById) {
       yield FavoriteRestaurantLoadingState();
-      // Resto favoriteRestaurant;
+      Resto favoriteRestaurant;
       DatabaseHelper _dbHelper;
       print(event.id);
-      var favoriteRestaurant = await _dbHelper.getBookmarkByUrl(event.id);
+      favoriteRestaurant = await _dbHelper.getBookmarkById(event.id);
+
       print(favoriteRestaurant != null);
       if (favoriteRestaurant != null) {
         yield FavoriteRestaurantSuccessGetListByIdState(
-            restaurantTableData: favoriteRestaurant.isNotEmpty);
+            restaurantTableData: favoriteRestaurant);
       } else {
         yield FavoriteRestaurantFailedState();
       }
-    // } else if (event is InsertFavoriteRestaurant) {
-    //   try {
-    //     yield FavoriteRestaurantLoadingState();
-    //     DatabaseHelper _dbHelper;
-    //     await _dbHelper.insertBookmark(event.restaurantTableData);
-    //     yield FavoriteRestaurantSuccessInsertState();
-    //   } catch (e) {
-    //     yield FavoriteRestaurantFailedState();
-    //   }
-    // } else if (event is DeleteFavoriteRestaurant) {
-    //   try {
-    //     yield FavoriteRestaurantLoadingState();
-    //     DatabaseHelper _dbHelper;
-    //     await _dbHelper.insertRestoFav(event.restaurantTableData);
-    //     yield FavoriteRestaurantSuccessDeleteState();
-    //   } catch (e) {
-    //     yield FavoriteRestaurantFailedState();
-    //   }
+      // } else if (event is InsertFavoriteRestaurant) {
+      //   try {
+      //     yield FavoriteRestaurantLoadingState();
+      //     DatabaseHelper _dbHelper;
+      //     await _dbHelper.insertBookmark(event.restaurantTableData);
+      //     yield FavoriteRestaurantSuccessInsertState();
+      //   } catch (e) {
+      //     yield FavoriteRestaurantFailedState();
+      //   }
+      // } else if (event is DeleteFavoriteRestaurant) {
+      //   try {
+      //     yield FavoriteRestaurantLoadingState();
+      //     DatabaseHelper _dbHelper;
+      //     await _dbHelper.insertRestoFav(event.restaurantTableData);
+      //     yield FavoriteRestaurantSuccessDeleteState();
+      //   } catch (e) {
+      //     yield FavoriteRestaurantFailedState();
+      //   }
     }
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:provider/provider.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/bloc/page_bloc.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/bloc/restaurant_detail_bloc.dart';
 import 'package:submission2_flutter_fundamental_dicoding_bloc/bloc/restaurant_favorite_bloc.dart';
@@ -161,6 +162,9 @@ class _DetailRestaurantPageState extends State<DetailRestaurantPage> {
                                             }
                                           },
                                         ),
+                                        // ChangeNotifierProvider(create: (context) => DbProvider(),
+                                        // child: ,
+                                        // )
                                       ],
                                     ),
                                     Row(
