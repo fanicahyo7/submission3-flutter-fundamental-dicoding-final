@@ -1,5 +1,5 @@
 class Resto {
-  int id;
+  String id;
   String title;
 
   Resto({this.id, this.title});

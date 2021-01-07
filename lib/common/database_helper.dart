@@ -66,6 +66,17 @@ class DatabaseHelper {
      return results.map((res) => Resto.fromMap(res)).first;
   }
 
+  Future<void> updateNote(Resto note) async {
+    final db = await database;
+
+    await db.update(
+      _tblBookmark,
+      note.toMap(),
+      where: 'id = ?',
+      whereArgs: [note.id],
+    );
+  }
+
   Future<void> removeBookmark(String id) async {
     final db = await database;
 

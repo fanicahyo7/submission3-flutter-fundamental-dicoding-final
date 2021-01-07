@@ -27,6 +27,10 @@ class DbProvider extends ChangeNotifier {
   Future<Resto> getNoteById(String id) async {
     return await _dbHelper.getBookmarkById(id);
   }
+  void updateNote(Resto note) async {
+    await _dbHelper.updateNote(note);
+    _getAllNotes();
+  }
 
   void deleteNote(String id) async {
     await _dbHelper.removeBookmark(id);
